@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">WeChat-APKFiles-Installer</string>
+    <string name="installed_app">已安装应用</string>
+    <string name="remove_app_tip">长按确定删除选中应用</string>
+</resources>
