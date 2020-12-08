@@ -22,7 +22,8 @@ import app.wxapkfiles.bean.ApkInfo;
  */
 public class ApkFinder {
     private final static String[] DIRS = new String[]{
-            "tencent/MicroMsg/Download"
+            "tencent/MicroMsg/Download",
+            "Android/data/com.tencent.mm/MicroMsg/Download"
     };
 
     public List<ApkInfo> getFileList(Context context) {
@@ -63,5 +64,5 @@ public class ApkFinder {
         return apkInfo;
     }
 
-    private FileFilter apkFileFilter = file -> file.getName().toLowerCase().contains(".apk");
+    private final FileFilter apkFileFilter = file -> file.getName().toLowerCase().contains(".apk");
 }

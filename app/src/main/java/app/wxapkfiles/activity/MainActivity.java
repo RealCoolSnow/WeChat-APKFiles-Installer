@@ -79,7 +79,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
 
     private void scanAPK() {
         if (!scanning) {
-            binding.recyclerView.setVisibility(View.VISIBLE);
+            binding.viewContent.setVisibility(View.GONE);
             binding.viewEmpty.setVisibility(View.GONE);
             new ScanTask().execute();
         }
@@ -100,7 +100,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
             apkAdapter.notifyDataSetChanged();
             boolean empty = list.size() <= 0;
             binding.viewEmpty.setVisibility(empty ? View.VISIBLE : View.GONE);
-            binding.recyclerView.setVisibility(empty ? View.GONE : View.VISIBLE);
+            binding.viewContent.setVisibility(empty ? View.GONE : View.VISIBLE);
             binding.tvApkCount.setText(String.format(getString(R.string.apk_found_tip), list.size()));
         }
     }
