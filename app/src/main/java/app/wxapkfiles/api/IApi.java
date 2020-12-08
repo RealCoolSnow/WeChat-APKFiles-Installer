@@ -1,11 +1,9 @@
 package app.wxapkfiles.api;
 
 import app.network.bean.BaseResp;
-import app.wxapkfiles.api.bean.resp.HelloResp;
+import app.wxapkfiles.api.bean.resp.UpdateResp;
 import io.reactivex.Observable;
-import okhttp3.RequestBody;
-import retrofit2.http.Body;
-import retrofit2.http.POST;
+import retrofit2.http.GET;
 
 /**
  * File: IApi
@@ -14,6 +12,6 @@ import retrofit2.http.POST;
  * Description:
  */
 public interface IApi {
-    @POST("hello")
-    Observable<BaseResp<HelloResp>> hello(@Body RequestBody body);
+    @GET("wxfileinstall_update")
+    Observable<BaseResp<UpdateResp>> checkUpdate();
 }

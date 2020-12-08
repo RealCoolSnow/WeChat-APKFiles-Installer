@@ -8,4 +8,6 @@
     <string name="ok">我知道了</string>
     <string name="about_text">本软件用于查找并安装微信接收的APK文件。\n意见反馈：670696652（QQ）\n版本：v</string>
     <string name="apk_found_tip">找到%d个APK文件，点击进行安装</string>
+    <string name="cancel">取消</string>
+    <string name="update">升级</string>
 </resources>

@@ -11,14 +11,22 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import java.util.List;
 
+import app.network.BaseObserver;
+import app.network.RxScheduler;
+import app.network.bean.BaseResp;
 import app.wxapkfiles.R;
 import app.wxapkfiles.adapter.ApkAdapter;
+import app.wxapkfiles.api.bean.resp.UpdateResp;
 import app.wxapkfiles.base.BaseActivity;
 import app.wxapkfiles.bean.ApkInfo;
 import app.wxapkfiles.databinding.ActivityMainBinding;
+import app.wxapkfiles.network.RetrofitFactory;
 import app.wxapkfiles.util.ApkFinder;
 import app.wxapkfiles.util.DialogUtil;
+import app.wxapkfiles.util.UpdateInfo;
+import app.wxapkfiles.util.Util;
 import app.wxapkfiles.util.VersionUtil;
+import io.reactivex.Observable;
 
 
 public class MainActivity extends BaseActivity<ActivityMainBinding> {
@@ -40,6 +48,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
                 }
             }, 800);
         });
+        checkUpdate();
     }
 
     @Override
@@ -69,6 +78,28 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
 
             }
         }, null, null);
+    }
+
+    private void checkUpdate() {
+        Observable<BaseResp<UpdateResp>> observable = RetrofitFactory.getInstance().checkUpdate();
+        observable.compose(RxScheduler.compose(this.bindToLifecycle())).subscribe(new BaseObserver<UpdateResp>(this) {
+            @Override
+            protected void onSuccess(String msg, UpdateResp data) {
+                _checkUpdate(data);
+            }
+
+            @Override
+            protected void onError(int code, String msg) {
+            }
+        });
+    }
+
+    private void _checkUpdate(UpdateResp updateResp) {
+        UpdateInfo updateInfo = new UpdateInfo(MainActivity.this, updateResp);
+        if (updateInfo.isNeedUpdate()) {
+            DialogUtil.showMessage(MainActivity.this, getString(R.string.hint), updateResp.getHint(), getString(R.string.update),
+                    (dialog, which) -> Util.open(MainActivity.this, updateResp.getUrl()), getString(R.string.cancel), null);
+        }
     }
 
     @Override

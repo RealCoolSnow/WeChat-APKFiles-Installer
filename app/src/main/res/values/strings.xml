@@ -8,4 +8,6 @@
     <string name="ok">OK</string>
     <string name="about_text">Find and install WeChat\'s incoming apk file.\nFeedback：twitter.com/CoolSnow0927\nVersion：v</string>
     <string name="apk_found_tip">%d APK files found, click to install</string>
+    <string name="cancel">Cancel</string>
+    <string name="update">Update</string>
 </resources>
