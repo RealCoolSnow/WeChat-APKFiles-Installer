@@ -1,5 +1,11 @@
 <resources>
     <string name="app_name">WeChat-APKFiles-Installer</string>
-    <string name="installed_app">已安装应用</string>
-    <string name="remove_app_tip">长按确定删除选中应用</string>
+    <string name="scan_apk_files">Scan APK files</string>
+    <string name="apk_file_empty_tip">No APK file found</string>
+    <string name="refresh">Refresh</string>
+    <string name="about">About</string>
+    <string name="hint">Tip</string>
+    <string name="ok">OK</string>
+    <string name="about_text">Find and install WeChat\'s incoming apk file.\nFeedback：twitter.com/CoolSnow0927\nVersion：v</string>
+    <string name="apk_found_tip">%d APK files found, click to install</string>
 </resources>

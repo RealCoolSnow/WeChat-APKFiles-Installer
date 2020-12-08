@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">WeChat-APKFiles-Installer</string>
+    <string name="scan_apk_files">扫描APK安装文件</string>
+    <string name="apk_file_empty_tip">没有找到APK文件</string>
+    <string name="refresh">刷新</string>
+    <string name="about">关于</string>
+    <string name="hint">提示</string>
+    <string name="ok">我知道了</string>
+    <string name="about_text">本软件用于查找并安装微信接收的APK文件。\n意见反馈：670696652（QQ）\n版本：v</string>
+    <string name="apk_found_tip">找到%d个APK文件，点击进行安装</string>
+</resources>
