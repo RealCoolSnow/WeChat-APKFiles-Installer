@@ -43,14 +43,17 @@ public class ApkFinder {
     }
 
     private ApkInfo fileInfo2ApkInfo(File file) {
+        String filePath = file.getAbsolutePath();
         ApkInfo apkInfo = new ApkInfo();
-        apkInfo.setPath(file.getAbsolutePath());
+        apkInfo.setPath(filePath);
         apkInfo.setFileName(file.getName());
         apkInfo.setLastModified(file.lastModified());
         //package info
         PackageManager pm = Application.getInstance().getPackageManager();
         PackageInfo packageInfo = pm.getPackageArchiveInfo(file.getAbsolutePath(), PackageManager.GET_ACTIVITIES);
         if (packageInfo != null) {
+            packageInfo.applicationInfo.sourceDir = filePath;
+            packageInfo.applicationInfo.publicSourceDir = filePath;
             ApplicationInfo appInfo = packageInfo.applicationInfo;
             apkInfo.setAppName(pm.getApplicationLabel(appInfo).toString());
             apkInfo.setPackageName(appInfo.packageName);
