@@ -1,5 +1,6 @@
 package app.wxapkfiles.activity;
 
+import android.Manifest;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Handler;
@@ -7,8 +8,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.orhanobut.logger.Logger;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import app.network.BaseObserver;
@@ -27,9 +32,14 @@ import app.wxapkfiles.util.UpdateInfo;
 import app.wxapkfiles.util.Util;
 import app.wxapkfiles.util.VersionUtil;
 import io.reactivex.Observable;
+import tool.easypermissions.EasyPermissions;
+
+import static tool.easypermissions.EasyPermissions.hasPermissions;
 
 
-public class MainActivity extends BaseActivity<ActivityMainBinding> {
+public class MainActivity extends BaseActivity<ActivityMainBinding> implements EasyPermissions.PermissionCallbacks {
+    private static final String TAG = "MainActivity";
+    private static final int RC_ALL_PERMISSIONS = 2000;
     private ApkAdapter apkAdapter;
     private boolean scanning = false;
 
@@ -49,6 +59,23 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
             }, 800);
         });
         checkUpdate();
+        requestPermission();
+    }
+
+    private void requestPermission() {
+        List<String> permList = new ArrayList<>();
+        if (!hasPermissions(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+            permList.add(Manifest.permission.READ_EXTERNAL_STORAGE);
+        }
+        if (!hasPermissions(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+            permList.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        }
+        if (permList.size() > 0) {
+            String[] perms = permList.toArray(new String[permList.size()]);
+            EasyPermissions.requestPermissions(this, "",
+                    RC_ALL_PERMISSIONS, perms);
+            Logger.d(TAG, "requestPermissions -> " + perms.length);
+        }
     }
 
     @Override
@@ -114,6 +141,23 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
             binding.viewEmpty.setVisibility(View.GONE);
             new ScanTask().execute();
         }
+    }
+
+    @Override
+    public void onPermissionsGranted(int requestCode, @NonNull List<String> perms) {
+
+    }
+
+    @Override
+    public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+        Logger.d(TAG, "onRequestPermissionsResult->" + requestCode);
     }
 
     private class ScanTask extends AsyncTask<Void, Void, List<ApkInfo>> {

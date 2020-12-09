@@ -1,3 +1,4 @@
+include ':easypermissions'
 include ':umeng'
 include ':logger'
 include ':network'

@@ -33,9 +33,11 @@ public class ApkFinder {
             File apkDir = new File(baseDir + File.separator + dir);
             if (apkDir.exists() && apkDir.isDirectory()) {
                 File[] files = apkDir.listFiles(apkFileFilter);
-                for (File f : files) {
-                    if (f != null) {
-                        list.add(fileInfo2ApkInfo(f));
+                if (files != null) {
+                    for (File f : files) {
+                        if (f != null) {
+                            list.add(fileInfo2ApkInfo(f));
+                        }
                     }
                 }
             }
